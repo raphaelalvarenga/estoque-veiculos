@@ -1,11 +1,12 @@
 import { Router, Request, Response } from "express";
+import veiculosController from "./controllers/veiculos-controller";
 
 const router = Router();
 
 router.route("/veiculos")
-    .get((req: Request, res: Response) => {
-        console.log("Buscar todos os veículos");
-        res.json({rota: "/veiculos"});
+    .get(async (req: Request, res: Response) => {
+        const veiculos = await veiculosController();
+        res.json(veiculos);
     });
 
 router.route("/veiculos/:id")
