@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import router from "../routes";
 
 export default class App {
 
@@ -18,11 +19,11 @@ export default class App {
         this.server.use(bodyParser.urlencoded({ extended: false }));
         this.server.use(bodyParser.json());
         this.server.use(cors());
-        this.server.set("port", process.env.PORT || this.port || 3000);
+        this.server.set("port", process.env.PORT || this.port || 5000);
     }
 
     public routes() {
-
+        this.server.use(router);
     }
 
     public listen() {
