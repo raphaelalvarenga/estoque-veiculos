@@ -7,12 +7,13 @@ let retorno: ResponseInterface;
 
 const veiculosController = {
     getVeiculos: async (req: Request, res: Response) => {
-        let veiculos: Veiculo[];
         
         try {
-            veiculos = await veiculosModel.getVeiculos() as Veiculo[];
+            const totalVeiculos: any = await veiculosModel.getTotalVeiculos();
+            
+            const veiculos: Veiculo[] = await veiculosModel.getVeiculos() as Veiculo[];
 
-            retorno = { success: true, message: "", params: { veiculos } };
+            retorno = { success: true, message: "", params: { totalVeiculos: totalVeiculos[0].total, veiculos } };
         }
 
         catch (erro) {

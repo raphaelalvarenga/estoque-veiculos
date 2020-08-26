@@ -2,6 +2,15 @@ import connection from "../auth/connection";
 import Veiculo from "../interfaces/veiculo-interface";
 
 const veiculosModel = {
+
+    getTotalVeiculos: async () => {
+        const sql = "SELECT COUNT(*) as total FROM veiculos WHERE vendido = 0";
+
+        const [rows, fields] = await (await connection).execute(sql);
+
+        return rows;
+    },
+
     getVeiculos: async () => {
         const sql = "SELECT * FROM veiculos";
         
