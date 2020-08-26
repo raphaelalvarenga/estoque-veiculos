@@ -27,6 +27,48 @@ const veiculosModel = {
         return rows;
     },
 
+    getQuantidadeByMarca: async () => {
+        const sql = `
+            SELECT marca, COUNT(marca) as qtd
+            FROM VEICULOS
+            GROUP BY marca
+        `;
+
+        const [rows, fields] = await (await connection).execute(sql);
+
+        return rows;
+    },
+
+    getQuantidadeByDecada: async () => {
+        const sql = `
+            SELECT decada, COUNT(*) AS qtd
+            FROM (
+                SELECT CONCAT(SUBSTR(ano, 1, 3), SUBSTR(ano, 4, 1) - SUBSTR(ano, 4, 1)) AS decada
+                FROM veiculos
+            ) AS decada
+            GROUP BY decada
+            ORDER BY decada
+        `;
+
+        const [rows, fields] = await (await connection).execute(sql);
+
+        return rows;
+    },
+
+    getQuantidadeVendidos: async () => {
+        const sql = `
+            SELECT
+                CASE WHEN vendido = 1 THEN 'Vendidos' ELSE 'Não Vendidos' END AS situacao,
+                COUNT(vendido) AS qtd
+            FROM veiculos
+            GROUP BY vendido
+        `;
+
+        const [rows, fields] = await (await connection).execute(sql);
+
+        return rows;
+    },
+
     insertVeiculo: async (newVeiculo: Veiculo) => {
         const { veiculo, marca, ano, descricao, vendido } = newVeiculo;
 

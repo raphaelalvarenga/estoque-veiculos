@@ -39,6 +39,48 @@ const veiculosController = {
         res.json(retorno);
     },
 
+    getQuantidadeByMarca: async (req: Request, res: Response) => {
+        try {
+            const quantidade = await veiculosModel.getQuantidadeByMarca();
+
+            retorno = { success: true, message: "", params: {quantidade} };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);
+    },
+
+    getQuantidadeByDecada: async (req: Request, res: Response) => {
+        try {
+            const quantidade = await veiculosModel.getQuantidadeByDecada();
+
+            retorno = { success: true, message: "", params: {quantidade} };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);
+    },
+
+    getQuantidadeVendidos: async (req: Request, res: Response) => {
+        try {
+            const quantidade = await veiculosModel.getQuantidadeVendidos();
+
+            retorno = { success: true, message: "", params: {quantidade} };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);
+    },
+
     insertVeiculo: async (req: Request, res: Response) => {
         
         try {

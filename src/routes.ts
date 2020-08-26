@@ -3,7 +3,12 @@ import veiculosController from "./controllers/veiculos-controller";
 
 const router = Router();
 
-const { getVeiculos, getVeiculoById, insertVeiculo, putVeiculo, patchVeiculo, deleteVeiculo } = veiculosController;
+const {
+        getVeiculos, getVeiculoById, getQuantidadeByMarca,
+        getQuantidadeByDecada, getQuantidadeVendidos,
+        insertVeiculo, putVeiculo, patchVeiculo,
+        deleteVeiculo
+} = veiculosController;
 
 router.route("/veiculos").get(getVeiculos);
 
