@@ -10,31 +10,74 @@ const veiculosController = {
         let veiculos: Veiculo[];
         
         try {
-            veiculos = await veiculosModel() as Veiculo[];
+            veiculos = await veiculosModel.getVeiculos() as Veiculo[];
 
             retorno = { success: true, message: "", params: { veiculos } };
         }
 
         catch (erro) {
-            retorno = { success: false, message: erro.getMessage(), params: {} };
+            retorno = { success: false, message: erro, params: {} };
         }
 
         res.json(retorno);
     },
 
     getVeiculoById: async (req: Request, res: Response) => {
-        console.log(`Buscar veículo com o id ${req.params.id}`);
-        res.json({rota: `/veiculos/${req.params.id}`});
+        const id = parseInt(req.params.id);
+
+        try {
+            const veiculo = await veiculosModel.getVeiculoById(id);
+
+            retorno = { success: true, message: "", params: { veiculo } };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);
     },
 
     insertVeiculo: async (req: Request, res: Response) => {
-        console.log("Cadastrar veículo");
-        res.json({rota: `/veiculos (cadastrar)`});
+        
+        try {
+
+            const { veiculo, marca, ano, descricao, vendido } = req.body.params.newVeiculo as Veiculo;
+
+            const newVeiculo: Veiculo = { veiculo, marca, ano, descricao, vendido };
+
+            const newId = await veiculosModel.insertVeiculo(newVeiculo);
+
+            retorno = { success: true, message: "", params: { newId: (newId as any).insertId } };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);
     },
 
     putVeiculo: async (req: Request, res: Response) => {
-        console.log(`Atualizar o veículo com id ${req.params.id}`);
-        res.json({rota: `/veiculos/${req.params.id} (atualizar)`});
+        
+        try {
+
+            const id = parseInt(req.params.id);
+            
+            const { veiculo, marca, ano, descricao, vendido } = req.body.params.newVeiculo as Veiculo;
+
+            const newVeiculo: Veiculo = { id, veiculo, marca, ano, descricao, vendido };
+
+            const newId = await veiculosModel.putVeiculo(newVeiculo);
+
+            retorno = { success: true, message: "", params: {} };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);
     },
 
     patchVeiculo: async (req: Request, res: Response) => {
@@ -43,8 +86,21 @@ const veiculosController = {
     },
 
     deleteVeiculo: async (req: Request, res: Response) => {
-        console.log(`Deletar o veículo de id ${req.params.id}`);
-        res.json({rota: `/veiculos/${req.params.id} (deletar)`});
+
+        try {
+
+            const id = parseInt(req.params.id);
+            
+            const newId = await veiculosModel.deleteVeiculo(id);
+
+            retorno = { success: true, message: "", params: {} };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);
     }
 }
 
