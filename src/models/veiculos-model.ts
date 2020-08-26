@@ -28,6 +28,18 @@ const veiculosModel = {
         return rows;
     },
 
+    getUltimosRegistros: async (domingo: string, sabado: string) => {
+        const sql = `
+            SELECT *
+            FROM veiculos
+            WHERE created BETWEEN ? AND ?
+        `;
+
+        const [rows, fields] = await (await connection).execute(sql, [domingo, sabado]);
+
+        return rows;
+    },
+
     getQuantidadeByMarca: async () => {
         const sql = `
             SELECT marca, COUNT(marca) as qtd

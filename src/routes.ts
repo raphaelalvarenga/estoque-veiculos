@@ -7,7 +7,7 @@ const {
         getVeiculos, getVeiculoById, getQuantidadeByMarca,
         getQuantidadeByDecada, getQuantidadeVendidos,
         insertVeiculo, putVeiculo, patchVeiculo,
-        deleteVeiculo
+        deleteVeiculo, getUltimosRegistros
 } = veiculosController;
 
 router.route("/veiculos").get(getVeiculos);

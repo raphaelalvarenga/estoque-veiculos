@@ -10,7 +10,7 @@ let retorno: ResponseInterface;
 const {
     getTotalVeiculos, getVeiculos, getVeiculoById,
     getQuantidadeByMarca, getQuantidadeByDecada, getQuantidadeVendidos,
-    insertVeiculo, putVeiculo, deleteVeiculo
+    insertVeiculo, putVeiculo, deleteVeiculo, getUltimosRegistros
 } = veiculosModel;
 
 // Todos os controllers
@@ -46,6 +46,32 @@ const veiculosController = {
         }
 
         res.json(retorno);
+    },
+
+    getUltimosRegistros: async (req: Request, res: Response) => {
+
+        try {
+            const d = new Date();
+
+            // Domingo da última semana
+            let domingo: Date | string = new Date((d.getTime() - (d.getDay() * 86400000)) - 7 * 86400000);
+
+            // Sábado da última semana
+            let sabado: Date | string = new Date(domingo.getTime() + (6 * 86400000));
+
+            domingo = `${domingo.getFullYear()}-${domingo.getMonth() + 1}-${domingo.getDate()}`;
+            sabado = `${sabado.getFullYear()}-${sabado.getMonth() + 1}-${sabado.getDate()}`;
+
+            const veiculos = await getUltimosRegistros(domingo, sabado);
+
+            retorno = { success: true, message: "", params: { veiculos } };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);        
     },
 
     getQuantidadeByMarca: async (req: Request, res: Response) => {
