@@ -1,11 +1,25 @@
 import veiculosModel from "../models/veiculos-model";
 import { Request, Response } from "express";
 import Veiculo from "../interfaces/veiculo-interface";
+import ResponseInterface from "../interfaces/response-interface";
+
+let retorno: ResponseInterface;
 
 const veiculosController = {
     getVeiculos: async (req: Request, res: Response) => {
-        const veiculos: Veiculo[] = await veiculosModel() as Veiculo[];
-        res.json(veiculos);
+        let veiculos: Veiculo[];
+        
+        try {
+            veiculos = await veiculosModel() as Veiculo[];
+
+            retorno = { success: true, message: "", params: { veiculos } };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro.getMessage(), params: {} };
+        }
+
+        res.json(retorno);
     },
 
     getVeiculoById: async (req: Request, res: Response) => {
