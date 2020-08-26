@@ -3,15 +3,24 @@ import { Request, Response } from "express";
 import Veiculo from "../interfaces/veiculo-interface";
 import ResponseInterface from "../interfaces/response-interface";
 
+// Variável de retorno
 let retorno: ResponseInterface;
 
+// Desestruturando os model
+const {
+    getTotalVeiculos, getVeiculos, getVeiculoById,
+    getQuantidadeByMarca, getQuantidadeByDecada, getQuantidadeVendidos,
+    insertVeiculo, putVeiculo, deleteVeiculo
+} = veiculosModel;
+
+// Todos os controllers
 const veiculosController = {
     getVeiculos: async (req: Request, res: Response) => {
         
         try {
-            const totalVeiculos: any = await veiculosModel.getTotalVeiculos();
+            const totalVeiculos: any = await getTotalVeiculos();
             
-            const veiculos: Veiculo[] = await veiculosModel.getVeiculos() as Veiculo[];
+            const veiculos: Veiculo[] = await getVeiculos() as Veiculo[];
 
             retorno = { success: true, message: "", params: { totalVeiculos: totalVeiculos[0].total, veiculos } };
         }
@@ -27,7 +36,7 @@ const veiculosController = {
         const id = parseInt(req.params.id);
 
         try {
-            const veiculo = await veiculosModel.getVeiculoById(id);
+            const veiculo = await getVeiculoById(id);
 
             retorno = { success: true, message: "", params: { veiculo } };
         }
@@ -41,7 +50,7 @@ const veiculosController = {
 
     getQuantidadeByMarca: async (req: Request, res: Response) => {
         try {
-            const quantidade = await veiculosModel.getQuantidadeByMarca();
+            const quantidade = await getQuantidadeByMarca();
 
             retorno = { success: true, message: "", params: {quantidade} };
         }
@@ -55,7 +64,7 @@ const veiculosController = {
 
     getQuantidadeByDecada: async (req: Request, res: Response) => {
         try {
-            const quantidade = await veiculosModel.getQuantidadeByDecada();
+            const quantidade = await getQuantidadeByDecada();
 
             retorno = { success: true, message: "", params: {quantidade} };
         }
@@ -69,7 +78,7 @@ const veiculosController = {
 
     getQuantidadeVendidos: async (req: Request, res: Response) => {
         try {
-            const quantidade = await veiculosModel.getQuantidadeVendidos();
+            const quantidade = await getQuantidadeVendidos();
 
             retorno = { success: true, message: "", params: {quantidade} };
         }
@@ -89,7 +98,7 @@ const veiculosController = {
 
             const newVeiculo: Veiculo = { veiculo, marca, ano, descricao, vendido };
 
-            const newId = await veiculosModel.insertVeiculo(newVeiculo);
+            const newId = await insertVeiculo(newVeiculo);
 
             retorno = { success: true, message: "", params: { newId: (newId as any).insertId } };
         }
@@ -111,7 +120,7 @@ const veiculosController = {
 
             const newVeiculo: Veiculo = { id, veiculo, marca, ano, descricao, vendido };
 
-            const newId = await veiculosModel.putVeiculo(newVeiculo);
+            const newId = await putVeiculo(newVeiculo);
 
             retorno = { success: true, message: "", params: {} };
         }
@@ -134,7 +143,7 @@ const veiculosController = {
 
             const id = parseInt(req.params.id);
             
-            const newId = await veiculosModel.deleteVeiculo(id);
+            const newId = await deleteVeiculo(id);
 
             retorno = { success: true, message: "", params: {} };
         }

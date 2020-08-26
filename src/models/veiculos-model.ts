@@ -1,6 +1,7 @@
 import connection from "../auth/connection";
 import Veiculo from "../interfaces/veiculo-interface";
 
+// Todos os models
 const veiculosModel = {
 
     getTotalVeiculos: async () => {
@@ -108,7 +109,7 @@ const veiculosModel = {
         const [rows, fields] = await (await connection).query(sql, [id]);
 
         return rows;
-    },
+    }
 }
 
 export default veiculosModel;

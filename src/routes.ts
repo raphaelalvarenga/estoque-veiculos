@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import veiculosController from "./controllers/veiculos-controller";
 
 const router = Router();
