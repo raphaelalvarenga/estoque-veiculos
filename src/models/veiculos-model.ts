@@ -43,7 +43,7 @@ const veiculosModel = {
     getQuantidadeByMarca: async () => {
         const sql = `
             SELECT marca, COUNT(marca) as qtd
-            FROM VEICULOS
+            FROM veiculos
             GROUP BY marca
         `;
 
