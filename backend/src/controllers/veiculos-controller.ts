@@ -71,7 +71,7 @@ const veiculosController = {
             retorno = { success: false, message: erro, params: {} };
         }
 
-        res.json(retorno);        
+        res.json(retorno);
     },
 
     getQuantidadeByMarca: async (req: Request, res: Response) => {
