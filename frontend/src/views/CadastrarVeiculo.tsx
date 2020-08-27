@@ -3,6 +3,7 @@ import Veiculo from "../interfaces/veiculo-interface";
 import { Paper, Typography, Divider, FormControl, InputLabel, MenuItem, Select, TextField, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Button } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import BodyRequestInterface from "../interfaces/request-interface";
+import TituloPagina from "../components/TituloPagina";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,8 +47,7 @@ const Home: React.FunctionComponent = () => {
 
     return (
         <Paper className = {classes.paper}>
-            <Typography variant = "h5" gutterBottom>Cadastrar Veículo</Typography>
-            <Divider />
+            <TituloPagina titulo = "Cadastrar Veículo" />
 
             <Grid container>
                 <Grid item xs = {12} sm = {6} md = {4}>
