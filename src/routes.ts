@@ -26,6 +26,10 @@ router.route("/veiculos/find").get((req: Request, res: Response) => {
                         getQuantidadeVendidos(req, res);
                         break;
 
+                case "ultimosRegistros":
+                        getUltimosRegistros(req, res);
+                        break;
+
                 default: break;
         }
 });
