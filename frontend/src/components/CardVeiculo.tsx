@@ -13,7 +13,7 @@ const useStyles = makeStyles({
 const CardVeiculo = (veiculo: Veiculo) => {
 
     const classes = useStyles();
-    
+
     return (
         <Grid item xs = {12} sm = {6} md = {4}>
             <Card className = {classes.root}>
@@ -35,7 +35,7 @@ const CardVeiculo = (veiculo: Veiculo) => {
                         </Typography>
 
                         <Typography variant = "body2" color = "textSecondary" component = "p">
-                            Vendido: {veiculo.vendido}
+                            Vendido: {veiculo.vendido === 1 ? "Sim" : "Não"}
                         </Typography>
 
                         <Typography variant = "body2" color = "textSecondary" component = "p">
