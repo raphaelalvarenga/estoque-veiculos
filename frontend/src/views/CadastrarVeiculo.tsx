@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Veiculo from "../interfaces/veiculo-interface";
 import { Paper, Typography, Divider, FormControl, InputLabel, MenuItem, Select, TextField, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Button } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import BodyRequestInterface from "../interfaces/request-interface";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -25,7 +26,7 @@ const Home: React.FunctionComponent = () => {
     const [veiculo, setVeiculo] = useState<Veiculo>({marca: "", veiculo: "", ano: 0, descricao: "", vendido: 1});
 
     const cadastrarVeiculo = () => {
-        const body = {
+        const bodyRequest: BodyRequestInterface = {
             idLogin: 1,
             action: "insertVeiculo",
             token: "gfgfsdgfdsgfd",
@@ -39,7 +40,7 @@ const Home: React.FunctionComponent = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(bodyRequest)
         });
     }
 
