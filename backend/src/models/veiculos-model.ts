@@ -1,10 +1,11 @@
 import connection from "../auth/connection";
 import Veiculo from "../interfaces/veiculo-interface";
+import NovoVeiculo from "../interfaces/novo-veiculo-interface";
 
 // Todos os models
 const veiculosModel = {
 
-    getTotalVeiculos: async () => {
+    getVeiculosNaoVendidos: async () => {
         const sql = "SELECT COUNT(*) as total FROM veiculos WHERE vendido = 0";
 
         const [rows, fields] = await (await connection).execute(sql);
@@ -13,17 +14,48 @@ const veiculosModel = {
     },
 
     getVeiculos: async () => {
-        const sql = "SELECT * FROM veiculos";
+        const sql = `
+            SELECT
+                v.id_veiculo,
+                ma.nome as marca,
+                mo.nome as modelo,
+                v.ano,
+                v.descricao,
+                v.vendido,
+                v.created,
+                v.updated
+            FROM veiculos v
+            INNER JOIN marcas ma
+            ON v.id_marca = ma.id_marca
+            INNER JOIN modelos mo
+            ON v.id_modelo = mo.id_modelo
+        `;
         
         const [rows, fields] = await (await connection).execute(sql);
         
         return rows;
     },
 
-    getVeiculoById: async (id: number) => {
-        const sql = "SELECT * FROM veiculos WHERE id = ?";
+    getVeiculoById: async (idVeiculo: number) => {
+        const sql = `
+            SELECT
+                v.id_veiculo,
+                ma.nome as marca,
+                mo.nome as modelo,
+                v.ano,
+                v.descricao,
+                v.vendido,
+                v.created,
+                v.updated
+            FROM veiculos v
+            INNER JOIN marcas ma
+            ON v.id_marca = ma.id_marca
+            INNER JOIN modelos mo
+            ON v.id_modelo = mo.id_modelo
+            WHERE v.id_veiculo = ?
+        `;
 
-        const [rows, fields] = await (await connection).execute(sql, [id]);
+        const [rows, fields] = await (await connection).execute(sql, [idVeiculo]);
 
         return rows;
     },
@@ -42,9 +74,13 @@ const veiculosModel = {
 
     getQuantidadeByMarca: async () => {
         const sql = `
-            SELECT marca, COUNT(marca) as qtd
-            FROM veiculos
-            GROUP BY marca
+            SELECT
+                ma.nome, COUNT(ma.nome) as qtd
+            FROM veiculos as v
+            INNER JOIN marcas as ma
+            ON v.id_marca = ma.id_marca
+            GROUP BY ma.nome
+            ORDER BY ma.nome
         `;
 
         const [rows, fields] = await (await connection).execute(sql);
@@ -82,43 +118,43 @@ const veiculosModel = {
         return rows;
     },
 
-    insertVeiculo: async (newVeiculo: Veiculo) => {
-        const { veiculo, marca, ano, descricao, vendido } = newVeiculo;
+    insertVeiculo: async (newVeiculo: NovoVeiculo) => {
+        const { idMarca, idModelo, ano, descricao, vendido } = newVeiculo;
 
         const sql = `
             INSERT INTO veiculos
-            (id, veiculo, marca, ano, descricao, vendido, created)
+            (id_veiculo, id_marca, id_modelo, ano, descricao, vendido, created)
             VALUES
             (DEFAULT, ?, ?, ?, ?, ?, SYSDATE())
         `;
 
-        const [rows, fields] = await (await connection).query(sql, [veiculo, marca, ano, descricao, vendido ? 1 : 0]);
+        const [rows, fields] = await (await connection).query(sql, [idMarca, idModelo, ano, descricao, vendido]);
 
         return rows;
     },
 
-    putVeiculo: async (newVeiculo: Veiculo) => {
-        const { id, veiculo, marca, ano, descricao, vendido } = newVeiculo;
+    putVeiculo: async (newVeiculo: NovoVeiculo) => {
+        const { idVeiculo, idMarca, idModelo, ano, descricao, vendido } = newVeiculo;
 
         const sql = `
             UPDATE veiculos
-            SET veiculo = ?, marca = ?, ano = ?, descricao = ?, vendido = ?, updated = SYSDATE()
-            WHERE id = ?
+            SET id_marca = ?, id_modelo = ?, ano = ?, descricao = ?, vendido = ?, updated = SYSDATE()
+            WHERE id_veiculo = ?
         `;
 
-        const [rows, fields] = await (await connection).query(sql, [veiculo, marca, ano, descricao, vendido ? 1 : 0, id]);
+        const [rows, fields] = await (await connection).query(sql, [idMarca, idModelo, ano, descricao, vendido, idVeiculo]);
 
         return rows;
     },
 
-    deleteVeiculo: async (id: number) => {
+    deleteVeiculo: async (idVeiculo: number) => {
 
         const sql = `
             DELETE FROM veiculos
-            WHERE id = ?
+            WHERE id_veiculo = ?
         `;
 
-        const [rows, fields] = await (await connection).query(sql, [id]);
+        const [rows, fields] = await (await connection).query(sql, [idVeiculo]);
 
         return rows;
     }

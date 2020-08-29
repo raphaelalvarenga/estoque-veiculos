@@ -34,14 +34,14 @@ router.route("/veiculos/find").get((req: Request, res: Response) => {
         }
 });
 
-router.route("/veiculos/:id").get(getVeiculoById);
+router.route("/veiculos/:idVeiculo").get(getVeiculoById);
 
 router.route("/veiculos").post(insertVeiculo);
 
-router.route("/veiculos/:id").put(putVeiculo);
+router.route("/veiculos/:idVeiculo").put(putVeiculo);
 
-router.route("/veiculos/:id").patch(patchVeiculo);
+router.route("/veiculos/:idVeiculo").patch(patchVeiculo);
 
-router.route("/veiculos/:id").delete(deleteVeiculo);
+router.route("/veiculos/:idVeiculo").delete(deleteVeiculo);
 
 export default router;

@@ -2,13 +2,14 @@ import veiculosModel from "../models/veiculos-model";
 import { Request, Response } from "express";
 import Veiculo from "../interfaces/veiculo-interface";
 import ResponseInterface from "../interfaces/response-interface";
+import NovoVeiculo from "../interfaces/novo-veiculo-interface";
 
 // Variável de retorno
 let retorno: ResponseInterface;
 
 // Desestruturando os model
 const {
-    getTotalVeiculos, getVeiculos, getVeiculoById,
+    getVeiculosNaoVendidos, getVeiculos, getVeiculoById,
     getQuantidadeByMarca, getQuantidadeByDecada, getQuantidadeVendidos,
     insertVeiculo, putVeiculo, deleteVeiculo, getUltimosRegistros
 } = veiculosModel;
@@ -18,7 +19,7 @@ const veiculosController = {
     getVeiculos: async (req: Request, res: Response) => {
         
         try {
-            const totalVeiculos: any = await getTotalVeiculos();
+            const totalVeiculos: any = await getVeiculosNaoVendidos();
             
             const veiculos: Veiculo[] = await getVeiculos() as Veiculo[];
 
@@ -33,10 +34,10 @@ const veiculosController = {
     },
 
     getVeiculoById: async (req: Request, res: Response) => {
-        const id = parseInt(req.params.id);
+        const idVeiculo = parseInt(req.params.idVeiculo);
 
         try {
-            const veiculo = await getVeiculoById(id);
+            const veiculo = await getVeiculoById(idVeiculo);
 
             retorno = { success: true, message: "", params: { veiculo } };
         }
@@ -120,9 +121,9 @@ const veiculosController = {
         
         try {
 
-            const { veiculo, marca, ano, descricao, vendido } = req.body.params.newVeiculo as Veiculo;
+            const { idMarca, idModelo, ano, descricao, vendido } = req.body.params.newVeiculo as NovoVeiculo;
 
-            const newVeiculo: Veiculo = { veiculo, marca, ano, descricao, vendido };
+            const newVeiculo: NovoVeiculo = { idMarca, idModelo, ano, descricao, vendido };
 
             const newId = await insertVeiculo(newVeiculo);
 
@@ -140,13 +141,13 @@ const veiculosController = {
         
         try {
 
-            const id = parseInt(req.params.id);
+            const idVeiculo = parseInt(req.params.idVeiculo);
             
-            const { veiculo, marca, ano, descricao, vendido } = req.body.params.newVeiculo as Veiculo;
+            const { idMarca, idModelo, ano, descricao, vendido } = req.body.params.newVeiculo as NovoVeiculo;
 
-            const newVeiculo: Veiculo = { id, veiculo, marca, ano, descricao, vendido };
+            const newVeiculo: NovoVeiculo = { idVeiculo, idMarca, idModelo, ano, descricao, vendido };
 
-            const newId = await putVeiculo(newVeiculo);
+            await putVeiculo(newVeiculo);
 
             retorno = { success: true, message: "", params: {} };
         }
@@ -167,9 +168,9 @@ const veiculosController = {
 
         try {
 
-            const id = parseInt(req.params.id);
+            const idVeiculo = parseInt(req.params.idVeiculo);
             
-            const newId = await deleteVeiculo(id);
+            await deleteVeiculo(idVeiculo);
 
             retorno = { success: true, message: "", params: {} };
         }
