@@ -66,13 +66,14 @@ const veiculosModel = {
                 v.ano,
                 v.descricao,
                 v.vendido,
-                v.created
+                DATE_FORMAT(created, '%d/%m/%y') AS created
             FROM veiculos v
             INNER JOIN marcas ma
             ON v.idMarca = ma.idMarca
             INNER JOIN modelos mo
             ON v.idModelo = mo.idModelo
             WHERE v.created BETWEEN ? AND ?
+            ORDER BY created
         `;
 
         console.log(sql);

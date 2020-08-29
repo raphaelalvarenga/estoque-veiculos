@@ -94,12 +94,13 @@ const Estatisticas: React.FunctionComponent = () => {
                     </Grid>
                 </Grid>
 
-                <Typography variant = "h6" style = {{textAlign: "center"}}>Últimos Registros</Typography>
+                <Typography variant = "h6" style = {{textAlign: "center"}}>Registros da Última Semana</Typography>
 
                 <TableContainer component = {Paper}>
                     <Table>
                         <TableHead>
                             <TableRow>
+                                <TableCell>Data</TableCell>
                                 <TableCell>Marca</TableCell>
                                 <TableCell>Modelo</TableCell>
                                 <TableCell>Ano</TableCell>
@@ -112,6 +113,7 @@ const Estatisticas: React.FunctionComponent = () => {
                             {
                                 ultimosRegistros.map(ultimoRegistro => (
                                     <TableRow key = {ultimoRegistro.idVeiculo}>
+                                        <TableCell>{ultimoRegistro.created}</TableCell>
                                         <TableCell>{ultimoRegistro.marca}</TableCell>
                                         <TableCell>{ultimoRegistro.modelo}</TableCell>
                                         <TableCell>{ultimoRegistro.ano}</TableCell>
