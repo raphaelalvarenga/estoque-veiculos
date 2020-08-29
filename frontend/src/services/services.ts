@@ -42,6 +42,16 @@ const services = {
         const res: ResponseInterface = await req.json();
 
         return res.params.newId as number;
+    },
+
+    deleteVeiculo: async (idVeiculo: number): Promise<ResponseInterface> => {
+        const req = await fetch(`${config.endpoint}veiculos/${idVeiculo}`, {
+            method: "DELETE"
+        });
+
+        const res: ResponseInterface = await req.json();
+
+        return res;
     }
 }
 
