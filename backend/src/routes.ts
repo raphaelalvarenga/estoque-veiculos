@@ -7,22 +7,31 @@ const {
         getVeiculos, getVeiculoById, getQuantidadeByMarca,
         getQuantidadeByDecada, getQuantidadeVendidos,
         insertVeiculo, putVeiculo, patchVeiculo,
-        deleteVeiculo, getUltimosRegistros
+        deleteVeiculo, getUltimosRegistros, getMarcas,
+        getModelos
 } = veiculosController;
 
 router.route("/veiculos").get(getVeiculos);
 
 router.route("/veiculos/find").get((req: Request, res: Response) => {
         switch (req.query.q) {
-                case "marca":
+                case "marcas":
+                        getMarcas(req, res);
+                        break;
+
+                case "modelos":
+                        getModelos(req, res);
+                        break;
+
+                case "quantidadeMarcas":
                         getQuantidadeByMarca(req, res);
                         break;
                 
-                case "decada":
+                case "quantidadeDecadas":
                         getQuantidadeByDecada(req, res);
                         break;
                 
-                case "vendidos":
+                case "quantidadeVendidos":
                         getQuantidadeVendidos(req, res);
                         break;
 

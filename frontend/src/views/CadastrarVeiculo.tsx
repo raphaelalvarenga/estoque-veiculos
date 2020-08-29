@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NovoVeiculo from "../interfaces/novo-veiculo-interface";
 import { Paper, FormControl, InputLabel, MenuItem, Select, TextField, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Button } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import BodyRequestInterface from "../interfaces/request-interface";
 import TituloPagina from "../components/TituloPagina";
 import services from "../services/services";
+import MarcaInterface from "../interfaces/marca-interface";
+import ModeloInterface from "../interfaces/modelo-interface";
+import ResponseInterface from "../interfaces/response-interface";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -26,6 +28,29 @@ const Home: React.FunctionComponent = () => {
     const classes = useStyles();
     
     const [novoVeiculo, setNovoVeiculo] = useState<NovoVeiculo>({idMarca: "", idModelo: "", ano: 0, descricao: "", vendido: 1});
+    const [marcas, setMarcas] = useState<MarcaInterface[]>([]);
+    const [modelos, setModelos] = useState<ModeloInterface[]>([]);
+
+    useEffect(() => {
+        getDadosByParametros("q=marcas&p=");
+    }, [])
+
+    useEffect(() => {
+        if (novoVeiculo.idMarca > 0) {
+            getDadosByParametros(`q=modelos&p=${novoVeiculo.idMarca}`)
+        }
+    }, [novoVeiculo.idMarca])
+
+    const getDadosByParametros = async (param: string) => {
+        const response: ResponseInterface = await services.getDados(param);
+        if (param === "q=marcas&p=") {
+            const marcasCadastradas: MarcaInterface[] = response.params.marcas;
+            setMarcas(marcasCadastradas);
+        } else {
+            const modelosCadastrados: ModeloInterface[] = response.params.modelos;
+            setModelos(modelosCadastrados);
+        }
+    }
 
     const insertVeiculo = async () => {
 
@@ -42,11 +67,13 @@ const Home: React.FunctionComponent = () => {
                 <Grid item xs = {12} sm = {6} md = {4}>
                     <FormControl className = {classes.formControl}>
                         <InputLabel>Marca</InputLabel>
-                        <Select value = {novoVeiculo.idMarca} onChange = {(e: any) => setNovoVeiculo({...novoVeiculo, idMarca: e.target.value})}>
-                            <MenuItem value = "Chevrolet">Chevrolet</MenuItem>
-                            <MenuItem value = "Volkswagen">Volkswagen</MenuItem>
-                            <MenuItem value = "Toyota">Toyota</MenuItem>
-                            <MenuItem value = "Mitsubishi">Mitsubishi</MenuItem>
+                        <Select
+                            value = {novoVeiculo.idMarca}
+                            onChange = {(e) => setNovoVeiculo({...novoVeiculo, idMarca: e.target.value as number})}
+                        >
+                            {
+                                marcas.map(marca => <MenuItem key = {marca.idMarca} value = {marca.idMarca}>{marca.nome}</MenuItem>)
+                            }
                         </Select>
                     </FormControl>
                 </Grid>
@@ -59,10 +86,9 @@ const Home: React.FunctionComponent = () => {
                             onChange = {(e: any) => setNovoVeiculo({...novoVeiculo, idModelo: e.target.value})}
                             disabled = {novoVeiculo.idMarca === ""}
                         >
-                            <MenuItem value = "Beetle">Beetle</MenuItem>
-                            <MenuItem value = "Gol">Gol</MenuItem>
-                            <MenuItem value = "Golf">Golf</MenuItem>
-                            <MenuItem value = "Polo">Polo</MenuItem>
+                            {
+                                modelos.map(modelo => <MenuItem key = {modelo.idModelo} value = {modelo.idModelo}>{modelo.nome}</MenuItem>)
+                            }
                         </Select>
                     </FormControl>
                 </Grid>

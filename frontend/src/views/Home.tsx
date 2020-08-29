@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import Veiculo from "../interfaces/veiculo-interface";
 import CardVeiculo from "../components/CardVeiculo";
-import ResponseInterface from "../interfaces/response-interface";
 import services from "../services/services";
 
 const Home: React.FunctionComponent = () => {

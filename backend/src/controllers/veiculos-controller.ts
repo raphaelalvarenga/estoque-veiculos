@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import Veiculo from "../interfaces/veiculo-interface";
 import ResponseInterface from "../interfaces/response-interface";
 import NovoVeiculo from "../interfaces/novo-veiculo-interface";
+import MarcaInterface from "../interfaces/marca-interface";
+import ModeloInterface from "../interfaces/modelo-interface";
 
 // Variável de retorno
 let retorno: ResponseInterface;
@@ -11,7 +13,8 @@ let retorno: ResponseInterface;
 const {
     getVeiculosNaoVendidos, getVeiculos, getVeiculoById,
     getQuantidadeByMarca, getQuantidadeByDecada, getQuantidadeVendidos,
-    insertVeiculo, putVeiculo, deleteVeiculo, getUltimosRegistros
+    insertVeiculo, putVeiculo, deleteVeiculo, getUltimosRegistros,
+    getMarcas, getModelos
 } = veiculosModel;
 
 // Todos os controllers
@@ -40,6 +43,36 @@ const veiculosController = {
             const veiculo = await getVeiculoById(idVeiculo);
 
             retorno = { success: true, message: "", params: { veiculo } };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);
+    },
+
+    getMarcas: async (req: Request, res: Response) => {
+        
+        try {
+            const marcas: MarcaInterface[] = await getMarcas();
+
+            retorno = { success: true, message: "", params: { marcas } };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);
+    },
+
+    getModelos: async (req: Request, res: Response) => {
+        try {
+            const idMarca = parseInt(req.query.p?.toString()!);
+            const modelos: ModeloInterface[] = await getModelos(idMarca);
+
+            retorno = { success: true, message: "", params: { modelos } };
         }
 
         catch (erro) {

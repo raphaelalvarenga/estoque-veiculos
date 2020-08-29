@@ -1,6 +1,8 @@
 import connection from "../auth/connection";
 import Veiculo from "../interfaces/veiculo-interface";
 import NovoVeiculo from "../interfaces/novo-veiculo-interface";
+import MarcaInterface from "../interfaces/marca-interface";
+import ModeloInterface from "../interfaces/modelo-interface";
 
 // Todos os models
 const veiculosModel = {
@@ -70,6 +72,26 @@ const veiculosModel = {
         const [rows, fields] = await (await connection).execute(sql, [domingo, sabado]);
 
         return rows;
+    },
+
+    getMarcas: async (): Promise<MarcaInterface[]> => {
+        const sql = `SELECT * FROM marcas`;
+
+        const [rows, fields] = await (await connection).execute(sql);
+
+        return rows as MarcaInterface[];
+    },
+
+    getModelos: async (idMarca: number): Promise<ModeloInterface[]> => {
+        const sql = `
+            SELECT *
+            FROM modelos
+            WHERE idMarca = ?
+        `;
+
+        const [rows, fields] = await (await connection).query(sql, idMarca);
+
+        return rows as ModeloInterface[];
     },
 
     getQuantidadeByMarca: async () => {
