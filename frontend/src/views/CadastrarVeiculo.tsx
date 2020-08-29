@@ -1,31 +1,15 @@
 import React, { useState, useEffect } from "react";
 import NovoVeiculo from "../interfaces/novo-veiculo-interface";
 import { Paper, FormControl, InputLabel, MenuItem, Select, TextField, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Button } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import TituloPagina from "../components/TituloPagina";
 import services from "../services/services";
 import MarcaInterface from "../interfaces/marca-interface";
 import ModeloInterface from "../interfaces/modelo-interface";
 import ResponseInterface from "../interfaces/response-interface";
+import globalStyles from "../assets/styles/styles";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        paper: {
-            maxWidth: "1200px",
-            margin: "auto",
-            padding: "15px"
-        },
-
-        formControl: {
-            margin: theme.spacing(1),
-            width: "90%",
-            maxWidth: "742px"
-        }
-    })
-)
-
-const Home: React.FunctionComponent = () => {
-    const classes = useStyles();
+const CadastrarVeiculo: React.FunctionComponent = () => {
+    const classes = globalStyles();
     
     const [novoVeiculo, setNovoVeiculo] = useState<NovoVeiculo>({idMarca: "", idModelo: "", ano: 0, descricao: "", vendido: "1"});
     const [marcas, setMarcas] = useState<MarcaInterface[]>([]);
@@ -53,10 +37,23 @@ const Home: React.FunctionComponent = () => {
     }
 
     const insertVeiculo = async () => {
+        const {idMarca, idModelo, ano, descricao, vendido} = novoVeiculo;
+
+        const condicionais = [
+            idMarca === "",
+            idModelo === "",
+            ano === 0,
+            descricao === "",
+            vendido !== "1" && vendido !== "0"
+        ]
+
+        if (condicionais.includes(true)) {
+            alert("Preencha todos os campos!");
+            return false;
+        }
 
         const newId = await services.insertVeiculo(novoVeiculo);
-
-        setNovoVeiculo({...novoVeiculo, idVeiculo: newId})
+        setNovoVeiculo({idMarca: "", idModelo: "", ano: 0, descricao: "", vendido: "1"})
     }
 
     return (
@@ -64,8 +61,8 @@ const Home: React.FunctionComponent = () => {
             <TituloPagina titulo = "Cadastrar Veículo" />
 
             <Grid container>
-                <Grid item xs = {12} sm = {6} md = {4}>
-                    <FormControl className = {classes.formControl}>
+                <Grid item xs = {12} sm = {6} md = {4} className = {classes.gridFormularios}>
+                    <FormControl className = {classes.formControl} required>
                         <InputLabel>Marca</InputLabel>
                         <Select
                             value = {novoVeiculo.idMarca}
@@ -78,8 +75,8 @@ const Home: React.FunctionComponent = () => {
                     </FormControl>
                 </Grid>
 
-                <Grid item xs = {12} sm = {6} md = {4}>
-                    <FormControl className = {classes.formControl}>
+                <Grid item xs = {12} sm = {6} md = {4} className = {classes.gridFormularios}>
+                    <FormControl className = {classes.formControl} required>
                         <InputLabel>Modelo</InputLabel>
                         <Select
                             value = {novoVeiculo.idModelo}
@@ -93,8 +90,8 @@ const Home: React.FunctionComponent = () => {
                     </FormControl>
                 </Grid>
 
-                <Grid item xs = {12} sm = {6} md = {4}>
-                    <FormControl className = {classes.formControl}>
+                <Grid item xs = {12} sm = {6} md = {4} className = {classes.gridFormularios}>
+                    <FormControl className = {classes.formControl} required>
                         <TextField
                             label = "Ano"
                             value = {novoVeiculo.ano === 0 ? "" : novoVeiculo.ano}
@@ -103,24 +100,25 @@ const Home: React.FunctionComponent = () => {
                     </FormControl>
                 </Grid>
 
-                <Grid item xs = {12}>
+                <Grid item xs = {12} className = {classes.gridFormularios}>
                     <FormControl className = {classes.formControl}>
                         <TextField
                             label = "Descrição"
                             value = {novoVeiculo.descricao}
                             onChange = {(e: any) => setNovoVeiculo({...novoVeiculo, descricao: e.target.value})}
                             multiline
+                            required
                             rows = {5}
                             variant = "outlined"
                             inputProps = {{
                                 maxLength: 500
                             }}
+                            helperText = {`${novoVeiculo.descricao.length} de 500 caracteres restantes`}
                         />
-                    {novoVeiculo.descricao.length} de 500 caracteres restantes
                     </FormControl>
                 </Grid>
 
-                <Grid item xs = {12}>
+                <Grid item xs = {12} className = {classes.gridFormularios} style = {{marginLeft: "8px"}}>
                     <FormControl component = "fieldset">
                         <FormLabel component = "legend">Vendido?</FormLabel>
                         <RadioGroup
@@ -142,4 +140,4 @@ const Home: React.FunctionComponent = () => {
     )
 }
 
-export default Home;
+export default CadastrarVeiculo;

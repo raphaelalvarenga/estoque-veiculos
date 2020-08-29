@@ -3,20 +3,15 @@ import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardAct
 import { makeStyles } from "@material-ui/core/styles";
 import caravatar from "../assets/images/caravatar.png";
 import Veiculo from "../interfaces/veiculo-interface";
-
-const useStyles = makeStyles({
-    root: {
-        maxWidth: 345
-    }
-});
+import globalStyles from "../assets/styles/styles";
 
 const CardVeiculo = (veiculo: Veiculo) => {
 
-    const classes = useStyles();
+    const classes = globalStyles();
 
     return (
         <Grid item xs = {12} sm = {6} md = {4} key = {veiculo.idVeiculo}>
-            <Card className = {classes.root}>
+            <Card className = {classes.card}>
                 <CardActionArea>
                     <CardMedia
                         component = "img"
