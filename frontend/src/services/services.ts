@@ -81,6 +81,14 @@ const services = {
         const res: ResponseInterface = await req.json();
 
         return res;
+    },
+
+    getEstatisticas: async (): Promise<ResponseInterface> => {
+        const req = await fetch(`${config.endpoint}veiculos/find?q=estatisticas`);
+
+        const res: ResponseInterface = await req.json();
+
+        return res;
     }
 }
 

@@ -8,7 +8,7 @@ const {
         getQuantidadeByDecada, getQuantidadeVendidos,
         insertVeiculo, putVeiculo, patchVeiculo,
         deleteVeiculo, getUltimosRegistros, getMarcas,
-        getModelos
+        getModelos, getEstatisticas
 } = veiculosController;
 
 router.route("/veiculos").get(getVeiculos);
@@ -37,6 +37,10 @@ router.route("/veiculos/find").get((req: Request, res: Response) => {
 
                 case "ultimosRegistros":
                         getUltimosRegistros(req, res);
+                        break;
+
+                case "estatisticas":
+                        getEstatisticas(req, res);
                         break;
 
                 default: break;

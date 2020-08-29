@@ -215,6 +215,35 @@ const veiculosController = {
         }
 
         res.json(retorno);
+    },
+
+    getEstatisticas: async (req: Request, res: Response) => {
+        try {
+
+            const d = new Date();
+
+            // Domingo da última semana
+            let domingo: Date | string = new Date((d.getTime() - (d.getDay() * 86400000)) - 7 * 86400000);
+
+            // Sábado da última semana
+            let sabado: Date | string = new Date(domingo.getTime() + (6 * 86400000));
+
+            domingo = `${domingo.getFullYear()}-${domingo.getMonth() + 1}-${domingo.getDate()}`;
+            sabado = `${sabado.getFullYear()}-${sabado.getMonth() + 1}-${sabado.getDate()}`;
+
+            const qtdDecada = await getQuantidadeByDecada();
+            const qtdMarcas = await getQuantidadeByMarca();
+            const qtdVendidos = await getQuantidadeVendidos();
+            const ultimosRegistros = await getUltimosRegistros(domingo, sabado);
+            
+            retorno = { success: true, message: "", params: {qtdDecada, qtdMarcas, qtdVendidos, ultimosRegistros} };
+        }
+
+        catch (erro) {
+            retorno = { success: false, message: erro, params: {} };
+        }
+
+        res.json(retorno);
     }
 }
 
