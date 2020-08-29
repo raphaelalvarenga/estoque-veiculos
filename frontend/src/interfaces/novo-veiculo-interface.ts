@@ -1,7 +1,7 @@
-export default interface Veiculo {
+export default interface NovoVeiculo {
     idVeiculo?: number;
-    marca: string;
-    modelo: string;
+    idMarca: string;
+    idModelo: string;
     ano: number;
     descricao: string;
     vendido: number; // Deveria ser boolean, mas o MySQL trabalha com 1 (para TRUE) e 0 (para FALSE)

@@ -24,10 +24,10 @@ const Home: React.FunctionComponent = () => {
                 {
                     veiculos.map(veiculo => (
                         <CardVeiculo
-                            key = {veiculo.id}
-                            id = {veiculo.id}
-                            veiculo = {veiculo.veiculo}
+                            key = {veiculo.idVeiculo}
+                            idVeiculo = {veiculo.idVeiculo}
                             marca = {veiculo.marca}
+                            modelo = {veiculo.modelo}
                             ano = {veiculo.ano}
                             descricao = {veiculo.descricao}
                             vendido = {veiculo.vendido}

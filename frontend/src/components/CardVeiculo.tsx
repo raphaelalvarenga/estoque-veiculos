@@ -23,11 +23,11 @@ const CardVeiculo = (veiculo: Veiculo) => {
                         alt = {veiculo.descricao}
                         height = "140"
                         image = {caravatar}
-                        title = {`${veiculo.marca} ${veiculo.veiculo}`}
+                        title = {`${veiculo.marca} ${veiculo.modelo}`}
                     />
                     <CardContent>
                         <Typography gutterBottom variant = "h5" component = "h2">
-                            {veiculo.marca} {veiculo.veiculo}
+                            {veiculo.marca} {veiculo.modelo}
                         </Typography>
 
                         <Typography variant = "body2" color = "textSecondary" component = "p">
