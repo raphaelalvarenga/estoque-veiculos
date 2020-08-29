@@ -2,10 +2,11 @@ import ResponseInterface from "../interfaces/response-interface";
 import Veiculo from "../interfaces/veiculo-interface";
 import NovoVeiculo from "../interfaces/novo-veiculo-interface";
 import BodyRequestInterface from "../interfaces/request-interface";
+import config from "../assets/config";
 
 const services = {
     getVeiculos: async (): Promise<Veiculo[]> => {
-        const req = await fetch("http://localhost:5000/veiculos")
+        const req = await fetch(`${config.endpoint}veiculos`)
         const res: ResponseInterface = await req.json();
 
         return res.params.veiculos as Veiculo[];
@@ -13,7 +14,7 @@ const services = {
 
     getDados: async (param: string): Promise<ResponseInterface> => {
                 
-        const req = await fetch(`http://localhost:5000/veiculos/find?${param}`);
+        const req = await fetch(`${config.endpoint}veiculos/find?${param}`);
         const res: ResponseInterface = await req.json();
 
         return res;
@@ -30,7 +31,7 @@ const services = {
             }
         }
 
-        const req = await fetch("http://localhost:5000/veiculos", {
+        const req = await fetch(`${config.endpoint}veiculos`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
