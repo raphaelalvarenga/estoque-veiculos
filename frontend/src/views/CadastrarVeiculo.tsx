@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Veiculo from "../interfaces/veiculo-interface";
+import NovoVeiculo from "../interfaces/novo-veiculo-interface";
 import { Paper, FormControl, InputLabel, MenuItem, Select, TextField, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Button } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import BodyRequestInterface from "../interfaces/request-interface";
 import TituloPagina from "../components/TituloPagina";
-import NovoVeiculo from "../interfaces/novo-veiculo-interface";
+import services from "../services/services";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -25,25 +25,13 @@ const useStyles = makeStyles((theme: Theme) =>
 const Home: React.FunctionComponent = () => {
     const classes = useStyles();
     
-    const [veiculo, setVeiculo] = useState<NovoVeiculo>({idMarca: "", idModelo: "", ano: 0, descricao: "", vendido: 1});
+    const [novoVeiculo, setNovoVeiculo] = useState<NovoVeiculo>({idMarca: "", idModelo: "", ano: 0, descricao: "", vendido: 1});
 
-    const cadastrarVeiculo = () => {
-        const bodyRequest: BodyRequestInterface = {
-            idLogin: 1,
-            action: "insertVeiculo",
-            token: "gfgfsdgfdsgfd",
-            params: {
-                "newVeiculo": veiculo
-            }
-        }
+    const insertVeiculo = async () => {
 
-        fetch("http://localhost:5000/veiculos", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(bodyRequest)
-        });
+        const newId = await services.insertVeiculo(novoVeiculo);
+
+        setNovoVeiculo({...novoVeiculo, idVeiculo: newId})
     }
 
     return (
@@ -54,7 +42,7 @@ const Home: React.FunctionComponent = () => {
                 <Grid item xs = {12} sm = {6} md = {4}>
                     <FormControl className = {classes.formControl}>
                         <InputLabel>Marca</InputLabel>
-                        <Select value = {veiculo.idMarca} onChange = {(e: any) => setVeiculo({...veiculo, idMarca: e.target.value})}>
+                        <Select value = {novoVeiculo.idMarca} onChange = {(e: any) => setNovoVeiculo({...novoVeiculo, idMarca: e.target.value})}>
                             <MenuItem value = "Chevrolet">Chevrolet</MenuItem>
                             <MenuItem value = "Volkswagen">Volkswagen</MenuItem>
                             <MenuItem value = "Toyota">Toyota</MenuItem>
@@ -67,9 +55,9 @@ const Home: React.FunctionComponent = () => {
                     <FormControl className = {classes.formControl}>
                         <InputLabel>Modelo</InputLabel>
                         <Select
-                            value = {veiculo.idModelo}
-                            onChange = {(e: any) => setVeiculo({...veiculo, idModelo: e.target.value})}
-                            disabled = {veiculo.idMarca === ""}
+                            value = {novoVeiculo.idModelo}
+                            onChange = {(e: any) => setNovoVeiculo({...novoVeiculo, idModelo: e.target.value})}
+                            disabled = {novoVeiculo.idMarca === ""}
                         >
                             <MenuItem value = "Beetle">Beetle</MenuItem>
                             <MenuItem value = "Gol">Gol</MenuItem>
@@ -83,8 +71,8 @@ const Home: React.FunctionComponent = () => {
                     <FormControl className = {classes.formControl}>
                         <TextField
                             label = "Ano"
-                            value = {veiculo.ano === 0 ? "" : veiculo.ano}
-                            onChange = {(e: any) => setVeiculo({...veiculo, ano: e.target.value})}
+                            value = {novoVeiculo.ano === 0 ? "" : novoVeiculo.ano}
+                            onChange = {(e: any) => setNovoVeiculo({...novoVeiculo, ano: e.target.value})}
                         />
                     </FormControl>
                 </Grid>
@@ -93,8 +81,8 @@ const Home: React.FunctionComponent = () => {
                     <FormControl className = {classes.formControl}>
                         <TextField
                             label = "Descrição"
-                            value = {veiculo.descricao}
-                            onChange = {(e: any) => setVeiculo({...veiculo, descricao: e.target.value})}
+                            value = {novoVeiculo.descricao}
+                            onChange = {(e: any) => setNovoVeiculo({...novoVeiculo, descricao: e.target.value})}
                             multiline
                             rows = {5}
                             variant = "outlined"
@@ -102,7 +90,7 @@ const Home: React.FunctionComponent = () => {
                                 maxLength: 500
                             }}
                         />
-                    {veiculo.descricao.length} de 500 caracteres restantes
+                    {novoVeiculo.descricao.length} de 500 caracteres restantes
                     </FormControl>
                 </Grid>
 
@@ -110,8 +98,8 @@ const Home: React.FunctionComponent = () => {
                     <FormControl component = "fieldset">
                         <FormLabel component = "legend">Vendido?</FormLabel>
                         <RadioGroup
-                            value = {veiculo.vendido}
-                            onChange = {(e: any) => setVeiculo({...veiculo, vendido: e.target.value})}
+                            value = {novoVeiculo.vendido}
+                            onChange = {(e: any) => setNovoVeiculo({...novoVeiculo, vendido: e.target.value})}
                         >
                             <FormControlLabel value = {1} control = {<Radio />} label = "Sim"/>
                             <FormControlLabel value = {0} control = {<Radio />} label = "Não"/>
@@ -120,7 +108,7 @@ const Home: React.FunctionComponent = () => {
                 </Grid>
             </Grid>
 
-            <Button variant = "contained" color = "primary" onClick = {cadastrarVeiculo}>Salvar</Button>
+            <Button variant = "contained" color = "primary" onClick = {insertVeiculo}>Salvar</Button>
 
             {/* Upload de imagem???? */}
         </Paper>

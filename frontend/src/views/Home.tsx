@@ -24,7 +24,7 @@ const Home: React.FunctionComponent = () => {
             <Grid container spacing = {3}>
                 {
                     veiculos.map(veiculo => {
-                        console.log(veiculo.idVeiculo)
+
                         return (
                         <CardVeiculo
                             key = {veiculo.idVeiculo}
