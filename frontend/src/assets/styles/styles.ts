@@ -20,8 +20,8 @@ const globalStyles = makeStyles((theme: Theme) =>
 
         paper: {
             maxWidth: "1200px",
-            margin: "auto",
-            padding: "15px"
+            margin: "40px auto 60px auto",
+            padding: "15px",
         },
 
         gridFormularios: {

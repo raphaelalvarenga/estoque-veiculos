@@ -41,10 +41,10 @@ const App: React.FunctionComponent = () => {
                 <List className = {classes.drawerList}>
                     {
                         [
-                            {nome: "Home", link: "/"},
-                            {nome: "Cadastrar Veículo", link: "/cadastrar-veiculo"}
+                            {id: 1, nome: "Home", link: "/"},
+                            {id: 2, nome: "Cadastrar Veículo", link: "/cadastrar-veiculo"}
                         ].map(rota => (
-                            <ListItem button>
+                            <ListItem key = {rota.id} button component = {Link} to = {rota.link} onClick = {() => setDrawer(false)}>
                                 <ListItemIcon>
                                     {
                                         rota.nome === "Home" ? <HomeIcon /> : <DirectionsCar />
@@ -56,15 +56,6 @@ const App: React.FunctionComponent = () => {
                     }
                 </List>
             </Drawer>
-
-
-
-            <nav>
-                <ul>
-                    <li><Link to = "/">Home</Link></li>
-                    <li><Link to = "/cadastrar-veiculo">Cadastrar Veículo</Link></li>
-                </ul>
-            </nav>
 
             <Switch>
                 <Route exact path = "/" component = {Home} />
