@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import NovoVeiculo from "../interfaces/novo-veiculo-interface";
-import { Paper, FormControl, InputLabel, MenuItem, Select, TextField, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Button } from "@material-ui/core";
+import { Paper, FormControl, InputLabel, MenuItem, Select, TextField, FormLabel, RadioGroup, FormControlLabel, Radio, Grid, Button, Snackbar, IconButton } from "@material-ui/core";
 import TituloPagina from "../components/TituloPagina";
 import services from "../services/services";
 import MarcaInterface from "../interfaces/marca-interface";
 import ModeloInterface from "../interfaces/modelo-interface";
 import ResponseInterface from "../interfaces/response-interface";
 import globalStyles from "../assets/styles/styles";
+import { Close } from "@material-ui/icons/";
 
 const CadastrarVeiculo: React.FunctionComponent = () => {
     const classes = globalStyles();
@@ -14,6 +15,7 @@ const CadastrarVeiculo: React.FunctionComponent = () => {
     const [novoVeiculo, setNovoVeiculo] = useState<NovoVeiculo>({idMarca: "", idModelo: "", ano: 0, descricao: "", vendido: "1"});
     const [marcas, setMarcas] = useState<MarcaInterface[]>([]);
     const [modelos, setModelos] = useState<ModeloInterface[]>([]);
+    const [snackbar, setSnackbar] = useState<{status: boolean, mensagem: string}>({status: false, mensagem: ""});
 
     useEffect(() => {
         getDadosByParametros("q=marcas&p=");
@@ -52,8 +54,15 @@ const CadastrarVeiculo: React.FunctionComponent = () => {
             return false;
         }
 
-        const newId = await services.insertVeiculo(novoVeiculo);
-        setNovoVeiculo({idMarca: "", idModelo: "", ano: 0, descricao: "", vendido: "1"})
+        try {
+            await services.insertVeiculo(novoVeiculo);
+            setNovoVeiculo({idMarca: "", idModelo: "", ano: 0, descricao: "", vendido: "1"});
+            setSnackbar({status: true, mensagem: "Cadastro realizado com sucesso!"});
+        }
+
+        catch (erro) {
+            setSnackbar({status: true, mensagem: "Falha no cadastro! Tente novamente!"});
+        }
     }
 
     return (
@@ -136,6 +145,22 @@ const CadastrarVeiculo: React.FunctionComponent = () => {
             <Button variant = "contained" color = "primary" onClick = {insertVeiculo}>Salvar</Button>
 
             {/* Upload de imagem???? */}
+
+            <Snackbar
+                open = {snackbar.status}
+                autoHideDuration = {6000}
+                message = {snackbar.mensagem}
+                onClose = {() => setSnackbar({status: false, mensagem: ""})}
+                anchorOrigin = {{
+                    vertical: "top",
+                    horizontal: "right"
+                }}
+                action = {
+                    <IconButton color = "inherit" onClick = {() => setSnackbar({status: false, mensagem: ""})}>
+                        <Close fontSize = "small" />
+                    </IconButton>
+                }
+            />
         </Paper>
     )
 }

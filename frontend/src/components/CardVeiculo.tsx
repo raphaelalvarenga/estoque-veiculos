@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import caravatar from "../assets/images/caravatar.png";
 import Veiculo from "../interfaces/veiculo-interface";
 import globalStyles from "../assets/styles/styles";
