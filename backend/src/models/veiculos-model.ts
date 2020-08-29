@@ -40,20 +40,16 @@ const veiculosModel = {
     getVeiculoById: async (idVeiculo: number) => {
         const sql = `
             SELECT
-                v.idVeiculo,
-                ma.nome as marca,
-                mo.nome as modelo,
-                v.ano,
-                v.descricao,
-                v.vendido,
-                DATE_FORMAT(v.created, '%d/%m/%Y') as created,
-                DATE_FORMAT(v.updated, '%d/%m/%Y') as updated
-            FROM veiculos v
-            INNER JOIN marcas ma
-            ON v.idMarca = ma.idMarca
-            INNER JOIN modelos mo
-            ON v.idModelo = mo.idModelo
-            WHERE v.idVeiculo = ?
+                idVeiculo,
+                idMarca,
+                idModelo,
+                ano,
+                descricao,
+                vendido,
+                DATE_FORMAT(created, '%d/%m/%Y') as created,
+                DATE_FORMAT(updated, '%d/%m/%Y') as updated
+            FROM veiculos
+            WHERE idVeiculo = ?
         `;
 
         const [rows, fields] = await (await connection).execute(sql, [idVeiculo]);

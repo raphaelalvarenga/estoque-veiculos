@@ -40,9 +40,11 @@ const veiculosController = {
         const idVeiculo = parseInt(req.params.idVeiculo);
 
         try {
-            const veiculo = await getVeiculoById(idVeiculo);
+            const veiculo: any = await getVeiculoById(idVeiculo);
+            const marcas = await getMarcas();
+            const modelos = await getModelos(veiculo[0].idMarca);
 
-            retorno = { success: true, message: "", params: { veiculo } };
+            retorno = { success: true, message: "", params: { veiculo, marcas, modelos } };
         }
 
         catch (erro) {

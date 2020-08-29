@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Home from "./views/Home";
 import CadastrarVeiculo from "./views/CadastrarVeiculo";
-import { CssBaseline, AppBar, Toolbar, IconButton, Typography, Button, Drawer, List, ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
+import { CssBaseline, AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
 import { Switch, Route, BrowserRouter, Link } from "react-router-dom";
 import { Menu, Person, Home as HomeIcon, DirectionsCar } from "@material-ui/icons";
 import globalStyles from "./assets/styles/styles";
+import AtualizarVeiculo from "./views/AtualizarVeiculo";
 
 const App: React.FunctionComponent = () => {
 
@@ -29,7 +30,7 @@ const App: React.FunctionComponent = () => {
 
                     <Typography variant = "h6" className = {classes.title}></Typography>
 
-                    <Button color = "inherit"><Person /></Button>
+                    <IconButton color = "inherit"><Person /></IconButton>
                 </Toolbar>
             </AppBar>
 
@@ -42,7 +43,7 @@ const App: React.FunctionComponent = () => {
                     {
                         [
                             {id: 1, nome: "Home", link: "/"},
-                            {id: 2, nome: "Cadastrar Veículo", link: "/cadastrar-veiculo"}
+                            {id: 2, nome: "Cadastrar Veículo", link: "/cadastrar-veiculo"},
                         ].map(rota => (
                             <ListItem key = {rota.id} button component = {Link} to = {rota.link} onClick = {() => setDrawer(false)}>
                                 <ListItemIcon>
@@ -60,6 +61,7 @@ const App: React.FunctionComponent = () => {
             <Switch>
                 <Route exact path = "/" component = {Home} />
                 <Route path = "/cadastrar-veiculo" component = {CadastrarVeiculo} />
+                <Route path = "/atualizar-veiculo/:id" component = {AtualizarVeiculo} />
             </Switch>
         </BrowserRouter>
     )

@@ -4,6 +4,7 @@ import caravatar from "../assets/images/caravatar.png";
 import Veiculo from "../interfaces/veiculo-interface";
 import globalStyles from "../assets/styles/styles";
 import { Delete } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 type Props = {
     veiculo: Veiculo,
@@ -15,7 +16,16 @@ const CardVeiculo = (props: Props) => {
     const classes = globalStyles();
 
     return (
-        <Grid item xs = {12} sm = {6} md = {4} key = {props.veiculo.idVeiculo}>
+        <Grid
+            item
+            xs = {12}
+            sm = {6}
+            md = {4}
+            key = {props.veiculo.idVeiculo}
+            component = {Link}
+            to = {`/atualizar-veiculo/${props.veiculo.idVeiculo}`}
+            style = {{textDecoration: "none"}}
+        >
             <Card className = {classes.card} style = {{margin: "auto"}}>
                 <CardActionArea>
                     <CardMedia
@@ -44,7 +54,12 @@ const CardVeiculo = (props: Props) => {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button size = "small" color = "primary">Editar</Button>
+                    <Button
+                        component = {Link}
+                        size = "small"
+                        to = {`/atualizar-veiculo/${props.veiculo.idVeiculo}`}
+                        color = "primary"
+                    >Editar</Button>
                     <IconButton
                         size = "small"
                         color = "secondary"
