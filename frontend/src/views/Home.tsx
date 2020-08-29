@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Dialog, Slide, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Snackbar, IconButton, Paper } from "@material-ui/core";
+import { Grid, Dialog, Slide, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Snackbar, IconButton, Paper, CircularProgress, Backdrop } from "@material-ui/core";
 import Veiculo from "../interfaces/veiculo-interface";
 import CardVeiculo from "../components/CardVeiculo";
 import services from "../services/services";
@@ -75,7 +75,7 @@ const Home: React.FunctionComponent = () => {
         setDialog({status: false, titulo: "", mensagem: "", idVeiculoEscopo: 0});
     }
 
-    return (
+    return veiculos.length > 0 ?
         <Paper className = {classes.paper}>
             <TituloPagina titulo = "Veículos" />
             <Grid container spacing = {3}>
@@ -127,7 +127,10 @@ const Home: React.FunctionComponent = () => {
                 }
             />
         </Paper>
-    )
+        :
+        <Backdrop className = {classes.backdrop} open>
+            <CircularProgress size = {80} />
+        </Backdrop>
 }
 
 export default Home;

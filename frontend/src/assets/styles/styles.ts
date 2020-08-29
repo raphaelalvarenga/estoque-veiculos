@@ -18,6 +18,11 @@ const globalStyles = makeStyles((theme: Theme) =>
             width: "250px"
         },
 
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#fff',
+        },
+
         paper: {
             maxWidth: "1200px",
             margin: "40px auto 60px auto",
