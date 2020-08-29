@@ -59,10 +59,25 @@ const veiculosModel = {
 
     getUltimosRegistros: async (domingo: string, sabado: string) => {
         const sql = `
-            SELECT *
-            FROM veiculos
-            WHERE created BETWEEN ? AND ?
+            SELECT
+                v.idVeiculo,
+                ma.nome AS marca,
+                mo.nome AS modelo,
+                v.ano,
+                v.descricao,
+                v.vendido,
+                v.created
+            FROM veiculos v
+            INNER JOIN marcas ma
+            ON v.idMarca = ma.idMarca
+            INNER JOIN modelos mo
+            ON v.idModelo = mo.idModelo
+            WHERE v.created BETWEEN ? AND ?
         `;
+
+        console.log(sql);
+        console.log(domingo);
+        console.log(sabado);
 
         const [rows, fields] = await (await connection).execute(sql, [domingo, sabado]);
 

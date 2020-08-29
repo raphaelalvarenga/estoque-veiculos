@@ -95,8 +95,8 @@ const veiculosController = {
             // Sábado da última semana
             let sabado: Date | string = new Date(domingo.getTime() + (6 * 86400000));
 
-            domingo = `${domingo.getFullYear()}-${domingo.getMonth() + 1}-${domingo.getDate()}`;
-            sabado = `${sabado.getFullYear()}-${sabado.getMonth() + 1}-${sabado.getDate()}`;
+            domingo = `${domingo.getFullYear()}-${domingo.getMonth() + 1}-${domingo.getDate()} 00:00:00`;
+            sabado = `${sabado.getFullYear()}-${sabado.getMonth() + 1}-${sabado.getDate()} 23:59:59`;
 
             const veiculos = await getUltimosRegistros(domingo, sabado);
 
@@ -228,15 +228,15 @@ const veiculosController = {
             // Sábado da última semana
             let sabado: Date | string = new Date(domingo.getTime() + (6 * 86400000));
 
-            domingo = `${domingo.getFullYear()}-${domingo.getMonth() + 1}-${domingo.getDate()}`;
-            sabado = `${sabado.getFullYear()}-${sabado.getMonth() + 1}-${sabado.getDate()}`;
+            domingo = `${domingo.getFullYear()}-${domingo.getMonth() + 1}-${domingo.getDate()} 00:00:00`;
+            sabado = `${sabado.getFullYear()}-${sabado.getMonth() + 1}-${sabado.getDate()} 23:59:59`;
 
-            const qtdDecada = await getQuantidadeByDecada();
+            const qtdDecadas = await getQuantidadeByDecada();
             const qtdMarcas = await getQuantidadeByMarca();
             const qtdVendidos = await getQuantidadeVendidos();
             const ultimosRegistros = await getUltimosRegistros(domingo, sabado);
             
-            retorno = { success: true, message: "", params: {qtdDecada, qtdMarcas, qtdVendidos, ultimosRegistros} };
+            retorno = { success: true, message: "", params: {qtdDecadas, qtdMarcas, qtdVendidos, ultimosRegistros} };
         }
 
         catch (erro) {
