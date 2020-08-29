@@ -31,9 +31,15 @@ const Home: React.FunctionComponent = () => {
     }, []);
 
     const getVeiculos = async () => {
-        const veiculos: Veiculo[] = await services.getVeiculos();
+        try {
+            const veiculos: Veiculo[] = await services.getVeiculos();
+            setVeiculos(veiculos);
+        }
 
-        setVeiculos(veiculos);
+        catch (erro) {
+            setSnackbar({status: true, mensagem: "Falha na busca dos registros. Atualize a página..."});
+        }
+
     }
 
     const clicouDeletarBotao = (idVeiculo: number) => {

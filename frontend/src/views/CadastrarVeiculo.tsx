@@ -28,13 +28,19 @@ const CadastrarVeiculo: React.FunctionComponent = () => {
     }, [novoVeiculo.idMarca])
 
     const getDadosByParametros = async (param: string) => {
-        const response: ResponseInterface = await services.getDados(param);
-        if (param === "q=marcas&p=") {
-            const marcasCadastradas: MarcaInterface[] = response.params.marcas;
-            setMarcas(marcasCadastradas);
-        } else {
-            const modelosCadastrados: ModeloInterface[] = response.params.modelos;
-            setModelos(modelosCadastrados);
+        try {
+            const response: ResponseInterface = await services.getDados(param);
+            if (param === "q=marcas&p=") {
+                const marcasCadastradas: MarcaInterface[] = response.params.marcas;
+                setMarcas(marcasCadastradas);
+            } else {
+                const modelosCadastrados: ModeloInterface[] = response.params.modelos;
+                setModelos(modelosCadastrados);
+            }
+        }
+
+        catch (erro) {
+            setSnackbar({status: true, mensagem: "Falha na busca de dados. Atualize a página..."})
         }
     }
 
