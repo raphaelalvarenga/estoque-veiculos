@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Dialog, Slide, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Snackbar, IconButton, Paper, CircularProgress, Backdrop } from "@material-ui/core";
-import Veiculo from "../interfaces/veiculo-interface";
-import CardVeiculo from "../components/CardVeiculo";
+import { Snackbar, IconButton, Paper } from "@material-ui/core";
 import services from "../services/services";
-import { TransitionProps } from "@material-ui/core/transitions/transition";
 import ResponseInterface from "../interfaces/response-interface";
 import { Close } from "@material-ui/icons";
 import globalStyles from "../assets/styles/styles";
 import TituloPagina from "../components/TituloPagina";
+import { LineChart, Line } from "recharts";
 
 type QtdDecadas = { decada: number, qtd: number };
 type QtdMarcas = { nome: string, qtd: number };
