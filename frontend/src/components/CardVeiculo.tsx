@@ -22,12 +22,10 @@ const CardVeiculo = (props: Props) => {
             sm = {6}
             md = {4}
             key = {props.veiculo.idVeiculo}
-            component = {Link}
-            to = {`/atualizar-veiculo/${props.veiculo.idVeiculo}`}
             style = {{textDecoration: "none"}}
         >
             <Card className = {classes.card} style = {{margin: "auto"}}>
-                <CardActionArea>
+                <CardActionArea component = {Link} to = {`/atualizar-veiculo/${props.veiculo.idVeiculo}`}>
                     <CardMedia
                         component = "img"
                         alt = {props.veiculo.descricao}
