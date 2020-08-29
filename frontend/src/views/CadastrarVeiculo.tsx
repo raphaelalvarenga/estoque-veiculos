@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const Home: React.FunctionComponent = () => {
     const classes = useStyles();
     
-    const [novoVeiculo, setNovoVeiculo] = useState<NovoVeiculo>({idMarca: "", idModelo: "", ano: 0, descricao: "", vendido: 1});
+    const [novoVeiculo, setNovoVeiculo] = useState<NovoVeiculo>({idMarca: "", idModelo: "", ano: 0, descricao: "", vendido: "1"});
     const [marcas, setMarcas] = useState<MarcaInterface[]>([]);
     const [modelos, setModelos] = useState<ModeloInterface[]>([]);
 
@@ -69,7 +69,7 @@ const Home: React.FunctionComponent = () => {
                         <InputLabel>Marca</InputLabel>
                         <Select
                             value = {novoVeiculo.idMarca}
-                            onChange = {(e) => setNovoVeiculo({...novoVeiculo, idMarca: e.target.value as number})}
+                            onChange = {(e) => setNovoVeiculo({...novoVeiculo, idModelo: "", idMarca: e.target.value as number})}
                         >
                             {
                                 marcas.map(marca => <MenuItem key = {marca.idMarca} value = {marca.idMarca}>{marca.nome}</MenuItem>)
@@ -125,10 +125,11 @@ const Home: React.FunctionComponent = () => {
                         <FormLabel component = "legend">Vendido?</FormLabel>
                         <RadioGroup
                             value = {novoVeiculo.vendido}
-                            onChange = {(e: any) => setNovoVeiculo({...novoVeiculo, vendido: e.target.value})}
+                            onChange = {(e) => setNovoVeiculo({...novoVeiculo, vendido: e.target.value})}
+                            name = "vendido"
                         >
-                            <FormControlLabel value = {1} control = {<Radio />} label = "Sim"/>
-                            <FormControlLabel value = {0} control = {<Radio />} label = "Não"/>
+                            <FormControlLabel value = "1" control = {<Radio />} label = "Sim"/>
+                            <FormControlLabel value = "0" control = {<Radio />} label = "Não"/>
                         </RadioGroup>
                     </FormControl>
                 </Grid>
