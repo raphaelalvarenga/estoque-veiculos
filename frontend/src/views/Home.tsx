@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core";
 import Veiculo from "../interfaces/veiculo-interface";
 import CardVeiculo from "../components/CardVeiculo";
 import ResponseInterface from "../interfaces/response-interface";
+import services from "../services/services";
 
 const Home: React.FunctionComponent = () => {
     
@@ -12,17 +13,19 @@ const Home: React.FunctionComponent = () => {
         getVeiculos();
     }, []);
 
-    const getVeiculos = () => {
-        fetch("http://localhost:5000/veiculos")
-            .then(res => res.json())
-            .then((response: ResponseInterface) => setVeiculos(response.params.veiculos));
+    const getVeiculos = async () => {
+        const veiculos: Veiculo[] = await services.getVeiculos();
+
+        setVeiculos(veiculos);
     }
 
     return (
         <div>
             <Grid container spacing = {3}>
                 {
-                    veiculos.map(veiculo => (
+                    veiculos.map(veiculo => {
+                        console.log(veiculo.idVeiculo)
+                        return (
                         <CardVeiculo
                             key = {veiculo.idVeiculo}
                             idVeiculo = {veiculo.idVeiculo}
@@ -33,7 +36,7 @@ const Home: React.FunctionComponent = () => {
                             vendido = {veiculo.vendido}
                             created = {veiculo.created}
                         />
-                    ))
+                    )})
                 }
             </Grid>
         </div>

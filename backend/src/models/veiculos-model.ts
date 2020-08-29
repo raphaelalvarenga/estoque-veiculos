@@ -16,7 +16,7 @@ const veiculosModel = {
     getVeiculos: async () => {
         const sql = `
             SELECT
-                v.id_veiculo,
+                v.idVeiculo,
                 ma.nome as marca,
                 mo.nome as modelo,
                 v.ano,
@@ -26,9 +26,9 @@ const veiculosModel = {
                 v.updated
             FROM veiculos v
             INNER JOIN marcas ma
-            ON v.id_marca = ma.id_marca
+            ON v.idMarca = ma.idMarca
             INNER JOIN modelos mo
-            ON v.id_modelo = mo.id_modelo
+            ON v.idModelo = mo.idModelo
         `;
         
         const [rows, fields] = await (await connection).execute(sql);
@@ -39,7 +39,7 @@ const veiculosModel = {
     getVeiculoById: async (idVeiculo: number) => {
         const sql = `
             SELECT
-                v.id_veiculo,
+                v.idVeiculo,
                 ma.nome as marca,
                 mo.nome as modelo,
                 v.ano,
@@ -49,10 +49,10 @@ const veiculosModel = {
                 v.updated
             FROM veiculos v
             INNER JOIN marcas ma
-            ON v.id_marca = ma.id_marca
+            ON v.idMarca = ma.idMarca
             INNER JOIN modelos mo
-            ON v.id_modelo = mo.id_modelo
-            WHERE v.id_veiculo = ?
+            ON v.idModelo = mo.idModelo
+            WHERE v.idVeiculo = ?
         `;
 
         const [rows, fields] = await (await connection).execute(sql, [idVeiculo]);
@@ -78,7 +78,7 @@ const veiculosModel = {
                 ma.nome, COUNT(ma.nome) as qtd
             FROM veiculos as v
             INNER JOIN marcas as ma
-            ON v.id_marca = ma.id_marca
+            ON v.idMarca = ma.idMarca
             GROUP BY ma.nome
             ORDER BY ma.nome
         `;
@@ -123,7 +123,7 @@ const veiculosModel = {
 
         const sql = `
             INSERT INTO veiculos
-            (id_veiculo, id_marca, id_modelo, ano, descricao, vendido, created)
+            (idVeiculo, idMarca, idModelo, ano, descricao, vendido, created)
             VALUES
             (DEFAULT, ?, ?, ?, ?, ?, SYSDATE())
         `;
@@ -138,8 +138,8 @@ const veiculosModel = {
 
         const sql = `
             UPDATE veiculos
-            SET id_marca = ?, id_modelo = ?, ano = ?, descricao = ?, vendido = ?, updated = SYSDATE()
-            WHERE id_veiculo = ?
+            SET idMarca = ?, idModelo = ?, ano = ?, descricao = ?, vendido = ?, updated = SYSDATE()
+            WHERE idVeiculo = ?
         `;
 
         const [rows, fields] = await (await connection).query(sql, [idMarca, idModelo, ano, descricao, vendido, idVeiculo]);
@@ -151,7 +151,7 @@ const veiculosModel = {
 
         const sql = `
             DELETE FROM veiculos
-            WHERE id_veiculo = ?
+            WHERE idVeiculo = ?
         `;
 
         const [rows, fields] = await (await connection).query(sql, [idVeiculo]);
