@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Dialog, Slide, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Snackbar, IconButton } from "@material-ui/core";
+import { Grid, Dialog, Slide, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Snackbar, IconButton, Paper } from "@material-ui/core";
 import Veiculo from "../interfaces/veiculo-interface";
 import CardVeiculo from "../components/CardVeiculo";
 import services from "../services/services";
 import { TransitionProps } from "@material-ui/core/transitions/transition";
 import ResponseInterface from "../interfaces/response-interface";
 import { Close } from "@material-ui/icons";
+import globalStyles from "../assets/styles/styles";
+import TituloPagina from "../components/TituloPagina";
 
 type DialogControl = {status: boolean, titulo: string, mensagem: string, idVeiculoEscopo: number};
 
@@ -17,6 +19,8 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const Home: React.FunctionComponent = () => {
+
+    const classes = globalStyles();
     
     const [veiculos, setVeiculos] = useState<Veiculo[]>([]);
     const [dialog, setDialog] = useState<DialogControl>({status: false, titulo: "", mensagem: "", idVeiculoEscopo: 0});
@@ -66,7 +70,8 @@ const Home: React.FunctionComponent = () => {
     }
 
     return (
-        <div>
+        <Paper className = {classes.paper}>
+            <TituloPagina titulo = "Veículos" />
             <Grid container spacing = {3}>
                 {
                     veiculos.map(veiculo => {
@@ -115,7 +120,7 @@ const Home: React.FunctionComponent = () => {
                     </IconButton>
                 }
             />
-        </div>
+        </Paper>
     )
 }
 

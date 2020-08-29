@@ -7,7 +7,7 @@ type Props = {
 
 const TituloPagina = (props: Props) => {
     return (
-        <div style = {{marginBottom: "20px"}}>
+        <div style = {{marginBottom: "20px", padding: "0 12px"}}>
             <Typography variant = "h5" gutterBottom>{props.titulo}</Typography>
             <Divider />
         </div>

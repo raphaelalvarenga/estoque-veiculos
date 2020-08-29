@@ -15,7 +15,7 @@ const CardVeiculo = (props: Props) => {
 
     return (
         <Grid item xs = {12} sm = {6} md = {4} key = {props.veiculo.idVeiculo}>
-            <Card className = {classes.card}>
+            <Card className = {classes.card} style = {{margin: "auto"}}>
                 <CardActionArea>
                     <CardMedia
                         component = "img"
