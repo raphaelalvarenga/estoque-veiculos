@@ -1,5 +1,4 @@
 import connection from "../auth/connection";
-import Veiculo from "../interfaces/veiculo-interface";
 import NovoVeiculo from "../interfaces/novo-veiculo-interface";
 import MarcaInterface from "../interfaces/marca-interface";
 import ModeloInterface from "../interfaces/modelo-interface";
@@ -24,8 +23,8 @@ const veiculosModel = {
                 v.ano,
                 v.descricao,
                 v.vendido,
-                v.created,
-                v.updated
+                DATE_FORMAT(v.created, '%d/%m/%Y') as created,
+                DATE_FORMAT(v.updated, '%d/%m/%Y') as updated
             FROM veiculos v
             INNER JOIN marcas ma
             ON v.idMarca = ma.idMarca
@@ -47,8 +46,8 @@ const veiculosModel = {
                 v.ano,
                 v.descricao,
                 v.vendido,
-                v.created,
-                v.updated
+                DATE_FORMAT(v.created, '%d/%m/%Y') as created,
+                DATE_FORMAT(v.updated, '%d/%m/%Y') as updated
             FROM veiculos v
             INNER JOIN marcas ma
             ON v.idMarca = ma.idMarca
