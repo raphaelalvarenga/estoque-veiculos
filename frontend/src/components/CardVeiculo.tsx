@@ -1,8 +1,9 @@
 import React from "react";
-import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from "@material-ui/core";
+import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, IconButton } from "@material-ui/core";
 import caravatar from "../assets/images/caravatar.png";
 import Veiculo from "../interfaces/veiculo-interface";
 import globalStyles from "../assets/styles/styles";
+import { Delete } from "@material-ui/icons";
 
 type Props = {
     veiculo: Veiculo,
@@ -44,7 +45,11 @@ const CardVeiculo = (props: Props) => {
                 </CardActionArea>
                 <CardActions>
                     <Button size = "small" color = "primary">Editar</Button>
-                    <Button size = "small" color = "secondary" onClick = {() => props.deletar(props.veiculo.idVeiculo!)}>Deletar</Button>
+                    <IconButton
+                        size = "small"
+                        color = "secondary"
+                        onClick = {() => props.deletar(props.veiculo.idVeiculo!)}
+                    ><Delete /></IconButton>
                 </CardActions>
             </Card>
         </Grid>

@@ -7,7 +7,7 @@ import MarcaInterface from "../interfaces/marca-interface";
 import ModeloInterface from "../interfaces/modelo-interface";
 import ResponseInterface from "../interfaces/response-interface";
 import globalStyles from "../assets/styles/styles";
-import { Close } from "@material-ui/icons/";
+import { Close, Save } from "@material-ui/icons/";
 
 const CadastrarVeiculo: React.FunctionComponent = () => {
     const classes = globalStyles();
@@ -148,7 +148,12 @@ const CadastrarVeiculo: React.FunctionComponent = () => {
                 </Grid>
             </Grid>
 
-            <Button variant = "contained" color = "primary" onClick = {insertVeiculo}>Salvar</Button>
+            <Button
+                variant = "contained"
+                color = "primary"
+                onClick = {insertVeiculo}
+                startIcon = {<Save />}
+            >Salvar</Button>
 
             {/* Upload de imagem???? */}
 
