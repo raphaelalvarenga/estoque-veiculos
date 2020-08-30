@@ -38,4 +38,4 @@ Este projeto visa realizar um CRUD completo no cadastro de estoque de veículos.
 
 11. Lance a aplicação frontend:
 
-npm start
+> npm start

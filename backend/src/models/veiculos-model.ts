@@ -30,6 +30,7 @@ const veiculosModel = {
             ON v.idMarca = ma.idMarca
             INNER JOIN modelos mo
             ON v.idModelo = mo.idModelo
+            ORDER BY created DESC
         `;
         
         const [rows, fields] = await (await connection).execute(sql);
