@@ -7,6 +7,7 @@ import globalStyles from "../assets/styles/styles";
 import TituloPagina from "../components/TituloPagina";
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar, PieChart, Pie, Legend, Cell } from "recharts";
 import Veiculo from "../interfaces/veiculo-interface";
+import { Link } from "react-router-dom";
 
 type QtdDecadas = { decada: string, qtd: number };
 type QtdMarcas = { nome: string, qtd: number };
@@ -119,7 +120,12 @@ const Estatisticas: React.FunctionComponent = () => {
                                         <TableCell>{ultimoRegistro.ano}</TableCell>
                                         <TableCell>{ultimoRegistro.vendido === 1 ? "Sim" : "Não"}</TableCell>
                                         <TableCell>
-                                            <IconButton size = "small" color = "primary"><Edit /></IconButton>
+                                            <IconButton
+                                                size = "small"
+                                                color = "primary"
+                                                component = {Link}
+                                                to = {`/atualizar-veiculo/${ultimoRegistro.idVeiculo}`}
+                                            ><Edit /></IconButton>
                                         </TableCell>
                                     </TableRow>
                                 ))
