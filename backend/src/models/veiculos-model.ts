@@ -76,10 +76,6 @@ const veiculosModel = {
             ORDER BY created
         `;
 
-        console.log(sql);
-        console.log(domingo);
-        console.log(sabado);
-
         const [rows, fields] = await (await connection).execute(sql, [domingo, sabado]);
 
         return rows;
