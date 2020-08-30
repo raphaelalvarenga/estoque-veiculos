@@ -14,7 +14,7 @@ Este projeto visa realizar um CRUD completo no cadastro de estoque de veículos.
 
 > cd backend
 
-5. **Cole aqui o arquivo .env que você recebeu por e-mail**;
+5. **Crie um arquivo na pasta backend chamado .env e cole aqui os dados que foram passados por e-mail**;
 
 6. Instale as dependências do backend:
 
