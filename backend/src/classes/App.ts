@@ -19,7 +19,7 @@ export default class App {
         this.server.use(bodyParser.urlencoded({ extended: false }));
         this.server.use(bodyParser.json());
         this.server.use(cors());
-        this.server.set("port", process.env.PORT || this.port || 5000);
+        this.server.set("port", process.env.PORT || this.port || 3000);
     }
 
     public routes() {

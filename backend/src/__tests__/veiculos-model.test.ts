@@ -1,7 +1,21 @@
-import veiculosModel from "../models/veiculos-model";
-import Veiculo from "../interfaces/veiculo-interface";
+import axios from "axios";
+import dotenv from "dotenv";
+import ResponseInterface from "../interfaces/response-interface";
 
-test("Testa se a busca de veículos funciona", async () => {
-    const veiculos = await veiculosModel.getVeiculos() as Veiculo[];
-    return expect(veiculos.length).toBeGreaterThanOrEqual(1)
+dotenv.config();
+
+test("Verifica se a busca de veículos retorna um ou mais registros", async () => {
+    return await axios
+            .get(`http://localhost:${process.env.PORT}/veiculos`)
+            .then(res => {
+                expect((res.data as ResponseInterface).params.veiculos.length).toBeGreaterThanOrEqual(1)
+            })
+})
+
+test("Verifica a busca de um veículo pelo ID", async () => {
+    return await axios
+            .get(`http://localhost:${process.env.PORT}/veiculos/4`)
+            .then(res => {
+                expect((res.data as ResponseInterface).success).toBeTruthy()
+            })
 })
