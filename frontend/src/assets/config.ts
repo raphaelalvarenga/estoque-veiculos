@@ -1,3 +1,3 @@
 export default {
-    endpoint: "http://localhost:3000/"
+    endpoint: "http://raphaelalvarenga.com:3001/"
 }
